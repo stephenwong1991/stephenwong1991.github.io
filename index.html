@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <style>
+      body {
+        background: #20a0ff;
+        text-align: center;
+      }
+      .actor {
+        color: #fff;
+        font-size: 46px;
+        min-height: 65px;
+      }
+      .actor:after {
+        content: "";
+        width: 6px;
+        height: 50px;
+        vertical-align: -8px;
+        background-color: #fff;
+        display: inline-block;
+        animation: blink 0.4s infinite alternate;
+      }
+      @keyframes blink {
+        0% {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="actor">
+      <!--只为这样的你:-->
+      <span id="content"></span>
+    </div>
+  </body>
+  <script>
+    const content = document.querySelector("#content");
+    const list = [
+      // '产品设计师',
+      // '前端工程师',
+      // '交互设计师',
+      // '产品经理'
+      "白日依山尽,",
+      "黄河入海流,",
+      "欲穷千里目,",
+      "更上... ...一层楼?",
+    ];
+    let index = 0;
+    let item = 0;
+    let flag = true;
+
+    function point() {
+      let timer = setInterval(() => {
+        let text = list[index];
+        if (item === text.length) {
+          flag = false;
+        }
+        if (flag) {
+          content.innerHTML += text.charAt(item);
+          item++;
+          if (item === text.length) {
+            clearInterval(timer);
+            setTimeout(point, 1000);
+          }
+        } else {
+          item--;
+          content.innerHTML = content.innerHTML.substring(0, item);
+          if (item < 0) {
+            flag = true;
+            index++;
+            index %= list.length;
+            item = 0;
+          }
+        }
+      }, 150);
+    }
+
+    point();
+  </script>
+</html>
